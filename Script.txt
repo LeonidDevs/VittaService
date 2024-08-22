@@ -1,0 +1,39 @@
+﻿CREATE TABLE Users (
+    UserId INT PRIMARY KEY IDENTITY,
+    UserName NVARCHAR(100) NOT NULL,
+    UserLogin NVARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Products (
+    ProductId INT PRIMARY KEY IDENTITY,
+    ProductName NVARCHAR(100) NOT NULL,
+    Price DECIMAL(18, 2) NOT NULL
+);
+
+
+CREATE TABLE Orders (
+    OrderId INT PRIMARY KEY IDENTITY,
+    UserId INT NOT NULL FOREIGN KEY REFERENCES Users(UserId),
+    OrderDate DATETIME NOT NULL DEFAULT GETDATE(),
+    TotalAmount DECIMAL(18, 2) NOT NULL
+);
+
+
+CREATE TABLE OrderItems (
+    OrderItemId INT PRIMARY KEY IDENTITY,
+    OrderId INT NOT NULL FOREIGN KEY REFERENCES Orders(OrderId),
+    ProductId INT NOT NULL FOREIGN KEY REFERENCES Products(ProductId),
+    Quantity INT NOT NULL
+);
+
+
+
+
+INSERT INTO Users (UserName, UserLogin) VALUES ('Леонид', 'leonid');
+INSERT INTO Users (UserName, UserLogin) VALUES ('Николай', 'nick');
+
+
+INSERT INTO Products (ProductName, Price) VALUES ('Сальбутамол', 100.00);
+INSERT INTO Products (ProductName, Price) VALUES ('RTX 3060', 200.00);
+INSERT INTO Products (ProductName, Price) VALUES ('Карета скорой помощи', 300.00);
